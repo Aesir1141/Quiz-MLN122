@@ -1,24 +1,104 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
 
 interface HomePageProps {
   onStartQuiz: () => void;
+  onGoLogin: () => void;
+}
+interface User {
+  name: string;
+  picture: string;
+  email: string;
 }
 
-function HomePage({ onStartQuiz }: HomePageProps) {
+function HomePage({ onStartQuiz, onGoLogin }: HomePageProps) {
+  const [user, setUser] = useState<User | null>(null);
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // đọc thông tin user từ localStorage khi load trang
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    setOpen(false);
+  };
+
+  // Đóng menu khi click ngoài
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
+    
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-purple-50 to-pink-50">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }}></div>
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "4s" }}></div>
       </div>
 
       <div className="relative z-10">
-        <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-20">
-          <div className="container mx-auto px-4 py-4">
+              <header className="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50">
+          <div className="container mx-auto flex justify-between items-center px-6 py-4">
             <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Quiz Challenge Blog
             </h2>
+
+            <div className="relative">
+              {!user ? (
+                <button
+                  onClick={onGoLogin}
+                  className="px-4 py-2 rounded-lg text-white font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90 transition"
+                >
+                  Sign In
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => setOpen(!open)}
+                    className="flex items-center gap-2 focus:outline-none"
+                  >
+                    <img
+                      src={user.picture}
+                      alt="avatar"
+                      className="w-10 h-10 rounded-full border-2 border-gray-300 hover:border-blue-500 transition"
+                    />
+                  </button>
+
+                  {/* Dropdown menu */}
+                  <div
+                    ref={dropdownRef}
+                    className={`absolute right-0 mt-3 w-56 bg-white border rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top-right
+                      ${open ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"}
+                    `}
+                  >
+                    <div className="p-4 flex flex-col gap-1">
+                      <span className="font-semibold text-gray-800">{user.name}</span>
+                      <span className="text-sm text-gray-500">{user.email}</span>
+                    </div>
+                    <div className="border-t border-gray-200" />
+                      <button
+                       onClick={handleLogout}
+                       className="w-full flex justify-between items-center px-4 py-2 text-red-600 font-semibold hover:bg-red-50 transition"
+                        >
+                      <span>Logout</span>
+                      <i className="bi bi-box-arrow-right"></i>
+                      </button>
+                    </div>
+                </>
+              )}
+            </div>
           </div>
         </header>
 
@@ -35,7 +115,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
 
             <div className="relative h-96 mb-12 rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="https://images.pexels.com/photos/3808517/pexels-photo-3808517.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                src="https://cdn.mos.cms.futurecdn.net/pX2mDYGsSAiT428zwhnQ5k.jpg"
                 alt="Hero"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />
@@ -54,7 +134,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
 
               <div className="relative h-64 rounded-xl overflow-hidden shadow-lg mb-6">
                 <img
-                  src="https://images.pexels.com/photos/4195325/pexels-photo-4195325.jpeg?auto=compress&cs=tinysrgb&w=1000"
+                  src="https://static.vecteezy.com/system/resources/previews/011/077/307/non_2x/quiz-time-button-quiz-time-speech-bubble-quiz-time-text-web-template-illustration-vector.jpg"
                   alt="Learning"
                   className="w-full h-full object-cover"
                 />
@@ -122,7 +202,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
 
               <div className="relative h-64 rounded-xl overflow-hidden shadow-lg mb-6">
                 <img
-                  src="https://images.pexels.com/photos/3945689/pexels-photo-3945689.jpeg?auto=compress&cs=tinysrgb&w=1000"
+                  src="https://d3rds0a9qm8vc5.cloudfront.net/cloodon.com/18.1646746451702.jpg"
                   alt="Achievement"
                   className="w-full h-full object-cover"
                 />
@@ -142,7 +222,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
             <div className="bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
               <div className="relative h-48 overflow-hidden">
                 <img
-                  src="https://images.pexels.com/photos/3962286/pexels-photo-3962286.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="https://static.vecteezy.com/system/resources/previews/008/517/534/large_2x/online-self-education-cartoon-poster-with-sitting-on-textbooks-man-with-laptop-outline-style-background-illustration-vector.jpg"
                   alt="Learning"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -156,7 +236,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
             <div className="bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
               <div className="relative h-48 overflow-hidden">
                 <img
-                  src="https://images.pexels.com/photos/4195325/pexels-photo-4195325.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="https://business.caw.ac.uk/wp-content/uploads/2024/05/Learning-at-Work-Week.jpg"
                   alt="Growth"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -187,7 +267,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
 
         <footer className="bg-white/50 backdrop-blur-sm border-t border-white/20">
           <div className="container mx-auto px-4 py-8 text-center text-gray-600">
-            <p>© 2024 Quiz Challenge. Được tạo bằng React & Tailwind CSS</p>
+            <p>© {new Date().getFullYear()} Quiz ChallengeBlog. All rights reserved.</p>
           </div>
         </footer>
       </div>
