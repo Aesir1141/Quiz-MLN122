@@ -1,4 +1,4 @@
-import { Flag } from 'lucide-react';
+import { Flag } from "lucide-react";
 
 interface QuestionListProps {
   totalQuestions: number;
@@ -6,6 +6,7 @@ interface QuestionListProps {
   answers: Record<number, number>;
   markedQuestions: Set<number>;
   onQuestionClick: (index: number) => void;
+  onComplete: () => void;
 }
 
 function QuestionList({
@@ -14,10 +15,13 @@ function QuestionList({
   answers,
   markedQuestions,
   onQuestionClick,
+  onComplete,
 }: QuestionListProps) {
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-8">
-      <h3 className="text-xl font-bold text-gray-800 mb-4">Danh sách câu hỏi</h3>
+      <h3 className="text-xl font-bold text-gray-800 mb-4">
+        Danh sách câu hỏi
+      </h3>
 
       <div className="mb-4 p-3 bg-blue-50 rounded-lg">
         <div className="text-sm text-gray-600 space-y-1">
@@ -47,13 +51,11 @@ function QuestionList({
               key={index}
               onClick={() => onQuestionClick(index)}
               className={`relative aspect-square rounded-lg font-semibold text-sm transition-all duration-200 ${
-                isCurrent
-                  ? 'ring-2 ring-blue-500 ring-offset-2 scale-110'
-                  : ''
+                isCurrent ? "ring-2 ring-blue-500 ring-offset-2 scale-110" : ""
               } ${
                 isAnswered
-                  ? 'bg-blue-500 text-white shadow-md hover:bg-blue-600'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  ? "bg-blue-500 text-white shadow-md hover:bg-blue-600"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
               {index + 1}
@@ -83,6 +85,17 @@ function QuestionList({
           </div>
         </div>
       </div>
+      <button
+        onClick={onComplete}
+        disabled={Object.keys(answers).length < totalQuestions} // chỉ bật khi làm hết
+        className={`flex items-center justify-center gap-2 w-full px-6 py-3 rounded-lg font-medium transition-all ${
+          Object.keys(answers).length < totalQuestions
+            ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+            : "bg-blue-500 text-white hover:bg-blue-600 shadow-sm hover:shadow-md"
+        }`}
+      >
+        <span>Nộp bài</span>
+      </button>
     </div>
   );
 }

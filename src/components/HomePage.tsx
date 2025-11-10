@@ -61,7 +61,7 @@ function HomePage({ onStartQuiz, onGoLogin }: HomePageProps) {
                   onClick={onGoLogin}
                   className="px-4 py-2 rounded-lg text-white font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90 transition"
                 >
-                  Sign In
+                  Đăng Nhập
                 </button>
               ) : (
                 <>

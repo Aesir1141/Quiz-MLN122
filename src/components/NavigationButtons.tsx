@@ -40,6 +40,7 @@ function NavigationButtons({
         <span>Câu sau</span>
         <ChevronRight size={20} />
       </button>
+      
     </div>
   );
 }
