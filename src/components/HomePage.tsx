@@ -76,7 +76,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
 
               <div className="relative h-64 rounded-xl overflow-hidden shadow-lg mb-6">
                 <img
-                  src="https://www.somo.nl/wp-content/uploads/2023/06/Amazon-controling-seller-zoom.jpg?image-crop-positioner-ts=1689172301"
+                  src="https://www.feedough.com/wp-content/uploads/2020/11/monopoly.webp"
                   alt="Learning"
                   className="w-full h-full object-cover"
                 />
