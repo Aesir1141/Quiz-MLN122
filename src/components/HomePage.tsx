@@ -1,47 +1,14 @@
 import { ArrowRight } from "lucide-react";
-// import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 
 interface HomePageProps {
   onStartQuiz: () => void;
-  // onGoLogin: () => void;
 }
-// interface User {
-//   name: string;
-//   picture: string;
-//   email: string;
-// }
 
 function HomePage({ onStartQuiz }: HomePageProps) {
-  // const [user, setUser] = useState<User | null>(null);
-  // const [open, setOpen] = useState(false);
-  // const dropdownRef = useRef<HTMLDivElement>(null);
+  const [activeBox, setActiveBox] = useState<number | null>(null);
 
-  // // đọc thông tin user từ localStorage khi load trang
-  // useEffect(() => {
-  //   const storedUser = localStorage.getItem("user");
-  //   if (storedUser) setUser(JSON.parse(storedUser));
-  // }, []);
-
-  // const handleLogout = () => {
-  //   localStorage.removeItem("user");
-  //   setUser(null);
-  //   setOpen(false);
-  // };
-
-  // // Đóng menu khi click ngoài
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (
-  //       dropdownRef.current &&
-  //       !dropdownRef.current.contains(event.target as Node)
-  //     ) {
-  //       setOpen(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
-
+  const handleClose = () => setActiveBox(null);
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-purple-50 to-pink-50">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -164,37 +131,115 @@ function HomePage({ onStartQuiz }: HomePageProps) {
             <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
               Tác động và mâu thuẫn của độc quyền dữ liệu
             </h2>
+
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all group">
+              {/* Box 1 */}
+              <div
+                onClick={() => setActiveBox(1)}
+                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all group cursor-pointer"
+              >
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <span className="text-xl font-bold">📈</span>
                 </div>
-                <h3 className="text-xl  text-gray-800 mb-2">
+                <h3 className="text-l text-gray-800 mb-2">
                   Tăng năng suất, thúc đẩy đổi mới sáng tạo, phát triển AI. Giúp
                   doanh nghiệp tối ưu sản xuất, giảm chi phí.
                 </h3>
               </div>
 
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all group">
+              {/* Box 2 */}
+              <div
+                onClick={() => setActiveBox(2)}
+                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all group cursor-pointer"
+              >
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <span className="text-xl">📌</span>
                 </div>
-                <h3 className="text-xl  text-gray-800 mb-2">
+                <h3 className="text-xl text-gray-800 mb-2">
                   Lợi nhuận tập trung vào số ít, bất bình đẳng dữ liệu ngày càng
                   lớn và nguy cơ xâm phạm
                   <strong> quyền riêng tư và tự do cá nhân.</strong>
                 </h3>
               </div>
 
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all group">
+              {/* Box 3 */}
+              <div
+                onClick={() => setActiveBox(3)}
+                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all group cursor-pointer"
+              >
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-pink-500 to-pink-600 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <span className="text-xl">📊</span>
                 </div>
-                <h3 className="text-xl  text-gray-800 mb-2">
+                <h3 className="text-xl text-gray-800 mb-2">
                   Người lao động số bị bóc lột thông qua thời gian online.
                 </h3>
               </div>
             </div>
+
+            {/* --- MODAL --- */}
+            {activeBox && (
+              <div
+                className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 transition-opacity duration-300 animate-fadeIn"
+                onClick={handleClose}
+              >
+                <div
+                  className="bg-white rounded-3xl shadow-2xl w-[700px] max-w-[90%] p-8 relative transform scale-100 animate-zoomIn"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Nút đóng */}
+                  <button
+                    onClick={handleClose}
+                    className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl transition"
+                  >
+                    ✕
+                  </button>
+
+                  {/* Nội dung tuỳ box */}
+                  {activeBox === 1 && (
+                    <>
+                      <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+                        Hiệu quả của việc ứng dụng AI trong sản xuất
+                      </h2>
+                      <p className="text-gray-700 text-lg leading-relaxed text-center">
+                        <strong>Tăng năng suất</strong>,{" "}
+                        <strong>thúc đẩy đổi mới sáng tạo</strong> và{" "}
+                        <strong>phát triển AI</strong> giúp doanh nghiệp tối ưu
+                        hóa quy trình, giảm chi phí vận hành, nâng cao năng lực
+                        cạnh tranh và mở ra cơ hội phát triển các sản phẩm thông
+                        minh.
+                      </p>
+                    </>
+                  )}
+
+                  {activeBox === 2 && (
+                    <>
+                      <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+                        Bất bình đẳng dữ liệu và quyền riêng tư
+                      </h2>
+                      <p className="text-gray-700 text-lg leading-relaxed text-center">
+                        Khi dữ liệu tập trung vào tay số ít tập đoàn lớn, nguy
+                        cơ xâm phạm <strong>quyền riêng tư</strong> và{" "}
+                        <strong>tự do cá nhân</strong> ngày càng nghiêm trọng,
+                        đồng thời gia tăng khoảng cách bất bình đẳng xã hội.
+                      </p>
+                    </>
+                  )}
+
+                  {activeBox === 3 && (
+                    <>
+                      <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+                        Lao động số và sự bóc lột thời gian online
+                      </h2>
+                      <p className="text-gray-700 text-lg leading-relaxed text-center">
+                        Người lao động bị bóc lột thông qua dữ liệu hành vi,
+                        năng suất bị giám sát chặt chẽ. Công nghệ vừa là công cụ
+                        hỗ trợ, vừa là cơ chế kiểm soát.
+                      </p>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
           </section>
 
           <article className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-8 md:p-12 mb-16">
