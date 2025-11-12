@@ -46,7 +46,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
 
             <div className="relative h-96 mb-12 rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="src/assets/z7216436116878_78f91bbeaa0782b3fffe70cebaedef80.jpg"
+                src="https://static.twentyoverten.com/5989e1613fee0d040bfd964f/SJzulu99M/tech.jpg"
                 alt="Hero"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
               />
@@ -76,7 +76,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
 
               <div className="relative h-64 rounded-xl overflow-hidden shadow-lg mb-6">
                 <img
-                  src="src/assets/z7216437183843_2cc79de2afb742b3ebba1dffc2ba39c5.jpg"
+                  src="https://www.somo.nl/wp-content/uploads/2023/06/Amazon-controling-seller-zoom.jpg?image-crop-positioner-ts=1689172301"
                   alt="Learning"
                   className="w-full h-full object-cover"
                 />
@@ -250,7 +250,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
 
               <div className="relative h-64 rounded-xl overflow-hidden shadow-lg mb-6">
                 <img
-                  src="src/assets/z7216437327264_c6f3043fb9d4b6559493fe31bec61c32.jpg"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/The_Bosses_of_the_Senate_by_Joseph_Keppler.jpg/1200px-The_Bosses_of_the_Senate_by_Joseph_Keppler.jpg"
                   alt="Achievement"
                   className="w-full h-full object-cover"
                 />
@@ -277,7 +277,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
             <div className="bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
               <div className="relative h-48 overflow-hidden">
                 <img
-                  src="src/assets/z7216436116879_e727eadcde8421d4d0e47b1a80ab4758.jpg"
+                  src="https://mitsloan.mit.edu/sites/default/files/styles/og_image/public/2018-11/tech-companies-divided-from-capitol-building-fault-line.jpg?h=2dbf321e&itok=MTFXQekt"
                   alt="Learning"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
@@ -294,7 +294,7 @@ function HomePage({ onStartQuiz }: HomePageProps) {
             <div className="bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
               <div className="relative h-48 overflow-hidden">
                 <img
-                  src="src/assets/z7216436696394_b1ad8272cb8003d4cee4fe0455337103.jpg"
+                  src="https://equitablegrowth.org/wp-content/uploads/2018/07/competitive-edge-promo.png"
                   alt="Growth"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />

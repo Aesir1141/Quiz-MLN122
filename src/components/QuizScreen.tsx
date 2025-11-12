@@ -18,7 +18,9 @@ interface User {
 function QuizScreen({ onBackHome }: QuizScreenProps) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
-  const [markedQuestions, setMarkedQuestions] = useState<Set<number>>(new Set());
+  const [markedQuestions, setMarkedQuestions] = useState<Set<number>>(
+    new Set()
+  );
   const [user, setUser] = useState<User | null>(null);
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -42,7 +44,10 @@ function QuizScreen({ onBackHome }: QuizScreenProps) {
   // Đóng menu khi click ngoài
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setOpen(false);
       }
     };
@@ -104,7 +109,13 @@ function QuizScreen({ onBackHome }: QuizScreenProps) {
           🎉 Bạn được {score}/{questions.length} điểm
         </h2>
         <button
-          onClick={() => window.location.reload()}
+          onClick={() => {
+            setScore(0);
+            setCurrentQuestion(0);
+            setAnswers({});
+            setMarkedQuestions(new Set());
+            setIsFinished(false);
+          }}
           className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
         >
           Làm lại
@@ -120,7 +131,9 @@ function QuizScreen({ onBackHome }: QuizScreenProps) {
         {/* HEADER */}
         <div className="flex items-center justify-between mb-8">
           <div className="text-center flex-1">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">Quiz Challenge</h1>
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">
+              Quiz Challenge
+            </h1>
             <p className="text-gray-600">Trả lời tất cả các câu hỏi dưới đây</p>
           </div>
 
@@ -151,10 +164,16 @@ function QuizScreen({ onBackHome }: QuizScreenProps) {
                 <div
                   ref={dropdownRef}
                   className={`absolute right-0 mt-3 w-56 bg-white border rounded-xl shadow-xl overflow-hidden transition-all duration-300 origin-top-right z-50
-                    ${open ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"}`}
+                    ${
+                      open
+                        ? "scale-100 opacity-100"
+                        : "scale-95 opacity-0 pointer-events-none"
+                    }`}
                 >
                   <div className="p-4 flex flex-col gap-1">
-                    <span className="font-semibold text-gray-800">{user.name}</span>
+                    <span className="font-semibold text-gray-800">
+                      {user.name}
+                    </span>
                     <span className="text-sm text-gray-500">{user.email}</span>
                   </div>
                   <div className="border-t border-gray-200" />
@@ -194,7 +213,9 @@ function QuizScreen({ onBackHome }: QuizScreenProps) {
                 >
                   <Flag size={18} />
                   <span className="text-sm font-medium">
-                    {markedQuestions.has(currentQuestion) ? "Đã đánh dấu" : "Đánh dấu"}
+                    {markedQuestions.has(currentQuestion)
+                      ? "Đã đánh dấu"
+                      : "Đánh dấu"}
                   </span>
                 </button>
               </div>
